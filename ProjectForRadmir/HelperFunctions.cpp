@@ -50,12 +50,37 @@ bool isIntNum(const bool type, const std::string& string, const char limit_begin
 // Выводит двоичную запись числа.
 // Выводит каждый бит числа, начиная со старшего (левого) бита и заканчивая младшим (правым).
 void Print(const int64_t& num) {
-	string dec;
-	cout << "Двоичное представление результата:"s << endl;
-	for (int i = 63; i >= 0; i--) {
+	std::string binary;
+	bool leading_zero = true; // Флаг для пропуска ведущих нулей
+
+	std::cout << "Двоичное представление результата:" << std::endl;
+
+	for (int i = 63; i >= 0; --i) {
 		int bit = (num >> i) & 1;
-		cout << bit;
-		dec += to_string(bit);
+		if (bit == 1) {
+			leading_zero = false;
+		}
+		if (!leading_zero) {
+			std::cout << bit;
+			binary += std::to_string(bit);
+		}
 	}
-	cout << endl << "Десятичное представление результата: "s << bitset<64>(dec).to_ullong();
+
+	if (binary.empty()) {
+		binary = "0";
+		std::cout << "0";
+	}
+
+	std::cout << std::endl << "Десятичное представление результата: " << std::bitset<64>(binary).to_ullong() << std::endl;
 }
+
+//void Print(const int64_t& num) {
+//	string dec;
+//	cout << "Двоичное представление результата:"s << endl;
+//	for (int i = 63; i >= 0; i--) {
+//		int bit = (num >> i) & 1;
+//		cout << bit;
+//		dec += to_string(bit);
+//	}
+//	cout << endl << "Десятичное представление результата: "s << bitset<64>(dec).to_ullong();
+//}
